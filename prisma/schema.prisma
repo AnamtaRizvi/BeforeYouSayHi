@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id           String        @id @default(cuid())
+  order        Int           @unique // 1 = Profile #1 (untrained), 2-10 = trained
+  name         String
+  age          Int
+  city         String
+  bio          String
+  interests    String        // JSON array stored as string
+  photoUrl     String?
+  avatar       AvatarConfig?
+  chatSessions ChatSession[]
+}
+
+model AvatarConfig {
+  id                    String   @id @default(cuid())
+  profileId             String   @unique
+  profile               Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  createdAt             DateTime @updatedAt
+  updatedAt             DateTime @updatedAt
+  answersJson           String?  // setup questions
+  styleSample           String?
+  convoCalibrationJson  String?  // calibration prompts + replies
+  scenarioRepliesJson   String?  // scenario choices + final replies
+  voiceProfileJson      String?  // extracted traits; NULL for Profile #1 initially
+}
+
+model ChatSession {
+  id        String       @id @default(cuid())
+  profileId String
+  profile   Profile      @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  messages  ChatMessage[]
+  createdAt DateTime     @updatedAt
+}
+
+model ChatMessage {
+  id        String     @id @default(cuid())
+  sessionId String
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role      String     // 'user' | 'assistant'
+  content   String
+  createdAt DateTime   @updatedAt
+}
