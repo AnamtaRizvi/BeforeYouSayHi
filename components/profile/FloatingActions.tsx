@@ -5,7 +5,6 @@ import { classNames } from "@/lib/utils";
 const ACTIONS = [
   { label: "Wave", emoji: "👋" },
   { label: "Compliment", emoji: "✨" },
-  { label: "Ask a fun Q", emoji: "😄" },
 ] as const;
 
 type FloatingActionsProps = {
@@ -16,7 +15,7 @@ export function FloatingActions({ className }: FloatingActionsProps) {
   return (
     <div
       className={classNames(
-        "flex flex-wrap justify-center gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100",
+        "flex flex-wrap justify-center gap-2 opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100",
         className
       )}
     >
@@ -24,7 +23,7 @@ export function FloatingActions({ className }: FloatingActionsProps) {
         <button
           key={label}
           type="button"
-          className="rounded-full border border-white/60 bg-white/80 px-3 py-1.5 text-xs font-medium text-zinc-700 shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-white hover:shadow-md"
+          className="rounded-full border border-slate-200/70 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition duration-200 ease-out hover:bg-slate-50 hover:shadow-md active:scale-[0.98]"
         >
           {label} {emoji}
         </button>

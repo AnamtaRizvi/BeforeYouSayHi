@@ -7,11 +7,11 @@ type ButtonVariant = "primary" | "secondary" | "ghost";
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-to-r from-fuchsia-500 via-pink-500 to-orange-400 text-white shadow-lg shadow-pink-200/50 hover:brightness-110 hover:scale-[1.02] hover:shadow-xl hover:shadow-pink-300/50 focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 transition-all duration-200",
+    "bg-gradient-to-r from-indigo-600 via-violet-600 to-teal-500 text-white shadow-sm shadow-indigo-300/30 hover:from-indigo-700 hover:via-violet-700 hover:to-teal-600 hover:shadow-md hover:shadow-indigo-300/40 focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:scale-95 transition-all duration-200",
   secondary:
-    "bg-white/70 text-zinc-800 backdrop-blur-md border border-white/50 shadow-sm hover:bg-white hover:shadow-md focus:ring-2 focus:ring-zinc-300 focus:ring-offset-2 transition-all duration-200",
+    "bg-white border border-slate-200 text-slate-900 hover:bg-slate-50 hover:shadow-sm focus:ring-2 focus:ring-slate-200 focus:ring-offset-2 active:scale-95 transition-all duration-200",
   ghost:
-    "bg-transparent text-zinc-600 hover:bg-white/50 hover:text-zinc-900 focus:ring-2 focus:ring-zinc-200 focus:ring-offset-2 transition-all duration-200",
+    "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus:ring-2 focus:ring-slate-200 focus:ring-offset-2 active:scale-95 transition-all duration-200",
 };
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -33,7 +33,7 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center font-semibold transition rounded-full px-5 py-2.5 text-sm disabled:opacity-50 disabled:pointer-events-none disabled:hover:scale-100";
+    "inline-flex items-center justify-center font-semibold tracking-tight transition rounded-full px-5 py-2.5 text-sm disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100";
   const styles = classNames(base, !pill && "rounded-xl", variantStyles[variant], className);
 
   if (asChild && href) {

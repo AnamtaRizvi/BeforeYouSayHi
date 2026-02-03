@@ -11,27 +11,27 @@ export function Navbar() {
   const { search, setSearch } = useProfilesSearch();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/40 bg-white/60 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-indigo-100/80 bg-gradient-to-r from-indigo-50/40 via-white to-violet-50/40 shadow-sm">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4">
         <Link
           href="/profiles"
-          className="shrink-0 bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-500 bg-clip-text text-lg font-bold text-transparent hover:opacity-90"
+          className="shrink-0 text-lg font-semibold tracking-tight text-indigo-700 hover:text-indigo-600 transition-colors"
         >
           EchoDate
         </Link>
         {showSearch && (
-          <div className="flex-1 max-w-md mx-auto">
+          <div className="mx-auto max-w-md flex-1">
             <input
               type="search"
               placeholder="Search name, bio, interests..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-full border border-white/60 bg-white/70 px-4 py-2 text-sm text-zinc-900 placeholder-zinc-500 backdrop-blur-sm focus:border-fuchsia-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-fuchsia-200"
+              className="w-full rounded-full border border-indigo-100 bg-indigo-50/30 px-4 py-2 text-sm text-slate-900 placeholder-slate-500 transition focus:border-indigo-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-200"
             />
           </div>
         )}
         <div className="shrink-0">
-          <Button variant="ghost" href="/about" className="text-zinc-600">
+          <Button variant="ghost" href="/about" className="text-slate-600 hover:text-indigo-600">
             About
           </Button>
         </div>

@@ -23,7 +23,7 @@ export default function ProfilesPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedInterest, setSelectedInterest] = useState<string | null>(null);
-  const [shuffledOrder, setShuffledOrder] = useState<number[] | null>(null);
+  const [shuffledOrder, setShuffledOrder] = useState<string[] | null>(null);
 
   useEffect(() => {
     fetch("/api/profiles")
@@ -89,34 +89,35 @@ export default function ProfilesPage() {
   if (loading) {
     return (
       <div className="flex min-h-[40vh] items-center justify-center">
-        <p className="text-zinc-600">Loading profiles...</p>
+        <p className="text-slate-600">Loading profiles...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      {/* Hero: glass card */}
-      <section className="rounded-3xl border border-white/50 bg-white/70 p-8 shadow-xl backdrop-blur-md md:p-10">
-        <h1 className="bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-500 bg-clip-text text-2xl font-bold text-transparent md:text-3xl">
-          Preview their vibe before you say hi
-        </h1>
-        <p className="mt-2 text-sm text-zinc-600">
-          Chat with AI avatars (simulations). They may be inaccurate.
-        </p>
+    <div className="space-y-10">
+      {/* Hero */}
+      <section className="rounded-3xl border border-slate-200/70 bg-white p-8 shadow-sm md:p-10">
+        <div className="pl-5">
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
+            Preview their vibe before you say hi
+          </h1>
+          <div className="mt-2 h-1 w-24 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-teal-500" aria-hidden />
+          <p className="mt-3 text-sm text-slate-600">
+            Chat with AI avatars (simulations). They may be inaccurate.
+          </p>
+        </div>
       </section>
 
-      {/* Stories row: horizontal scroll */}
-      <section className="overflow-x-auto pb-2">
-        <div className="flex gap-6">
-          {/* "Your vibe" story at start */}
+      {/* Stories row */}
+      <section className="overflow-x-auto pb-1 pt-1">
+        <div className="flex gap-8">
           <div className="flex min-w-[88px] flex-shrink-0 flex-col items-center gap-2">
-            <div className="flex h-[100px] w-[100px] flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 via-indigo-400 to-violet-400 text-2xl shadow-lg ring-4 ring-white/50">
+            <div className="flex h-[92px] w-[92px] flex-shrink-0 items-center justify-center rounded-full border-2 border-slate-200/80 bg-slate-50 text-2xl text-slate-400">
               ✨
             </div>
-            <span className="text-xs font-medium text-zinc-600">Your vibe</span>
+            <span className="text-xs font-medium text-slate-600">Your vibe</span>
           </div>
-          {/* 10 profile story bubbles */}
           {profiles.slice(0, 10).map((p) => (
             <div key={p.id} className="flex min-w-[88px] flex-shrink-0 flex-col items-center gap-2">
               <AvatarStory
@@ -126,8 +127,9 @@ export default function ProfilesPage() {
                 isPinned={p.order === 1}
                 href={`/profiles/${p.id}`}
                 showTooltip={false}
+                showLabelBelow
               />
-              <span className="max-w-[88px] truncate text-xs font-medium text-zinc-600">
+              <span className="max-w-[88px] truncate text-xs font-medium text-slate-600">
                 {p.name}
               </span>
             </div>
@@ -135,7 +137,7 @@ export default function ProfilesPage() {
         </div>
       </section>
 
-      {/* Filter bar: colorful pills + Shuffle */}
+      {/* Filter bar */}
       <div className="flex flex-wrap items-center gap-2">
         <Chip
           active={selectedInterest === null}
@@ -156,13 +158,12 @@ export default function ProfilesPage() {
         <button
           type="button"
           onClick={handleShuffle}
-          className="ml-2 rounded-full bg-gradient-to-r from-sky-500 via-indigo-500 to-violet-500 px-4 py-1.5 text-xs font-semibold text-white shadow-md transition hover:scale-105 hover:shadow-lg"
+          className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition duration-200 ease-out hover:bg-slate-50 hover:shadow-md active:scale-[0.98]"
         >
           Shuffle
         </button>
       </div>
 
-      {/* Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
         {displayOrder.map((p) => (
           <ProfileCard key={p.id} profile={p} isPinned={p.order === 1} />
@@ -170,7 +171,7 @@ export default function ProfilesPage() {
       </div>
 
       {filtered.length === 0 && (
-        <p className="py-12 text-center text-zinc-500">No profiles match your filters.</p>
+        <p className="py-12 text-center text-slate-500">No profiles match your filters.</p>
       )}
     </div>
   );

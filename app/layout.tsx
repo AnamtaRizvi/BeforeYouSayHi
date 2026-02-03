@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen text-zinc-900">
+      <body className="antialiased min-h-screen text-slate-900">
         <ToastProvider>
           <ProfilesSearchProvider>
             <Navbar />

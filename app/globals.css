@@ -3,57 +3,28 @@
 @tailwind utilities;
 
 :root {
-  --foreground: #18181b;
-  --background: #fafafa;
+  --foreground: #0f172a;
+  --background: #f8fafc;
 }
 
 body {
   color: var(--foreground);
-  background: linear-gradient(to bottom right, #fce7f3 0%, #ede9fe 40%, #e0f2fe 100%);
+  background-color: #f8fafc; /* slate-50 */
+  background-image:
+    radial-gradient(900px 520px at 15% -10%, rgba(99, 102, 241, 0.22), transparent 60%),
+    radial-gradient(900px 520px at 85% 0%, rgba(139, 92, 246, 0.18), transparent 60%),
+    radial-gradient(900px 520px at 50% 110%, rgba(45, 212, 191, 0.16), transparent 60%);
   min-height: 100vh;
 }
 
-/* Optional soft noise overlay */
+/* Subtle noise overlay */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
-}
-
-/* Micro-animations (CSS only) */
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes shine {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes ring-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pop-in {
-  0% { transform: scale(0.95); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
-
-@keyframes pulse-ring {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 0.2; transform: scale(1.08); }
-}
-
-@keyframes reaction-float {
-  0% { opacity: 0; transform: translateY(0) scale(0.5); }
-  20% { opacity: 1; transform: translateY(-8px) scale(1); }
-  100% { opacity: 0.8; transform: translateY(-24px) scale(1); }
 }
 
 @keyframes shine-sweep {
@@ -61,40 +32,28 @@ body::before {
   100% { left: 100%; }
 }
 
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 
-  .animate-floaty {
-    animation: floaty 3s ease-in-out infinite;
-  }
-
-  .animate-shine {
-    background-size: 200% 100%;
-    animation: shine 1.5s ease-in-out;
-  }
-
-  .animate-ring-rotate {
-    animation: ring-rotate 4s linear infinite;
-  }
-
-  .animate-pop {
-    animation: pop-in 0.3s ease-out;
-  }
-
-  .animate-pulse-ring {
-    animation: pulse-ring 2s ease-in-out infinite;
-  }
-
   .hover-lift {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
   }
   .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 
+  .card-shine {
+    position: relative;
+    overflow: hidden;
+  }
   .card-shine::after {
     content: "";
     position: absolute;
@@ -108,27 +67,28 @@ body::before {
       rgba(255, 255, 255, 0.4),
       transparent
     );
-    transition: left 0.6s ease;
     pointer-events: none;
     border-radius: inherit;
+    transition: none;
   }
   .card-shine:hover::after {
-    left: 100%;
+    animation: shine-sweep 0.6s ease-out forwards;
+  }
+
+  .match-pill-shimmer {
+    animation: shimmer 2.5s ease-in-out infinite;
   }
 }
 
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   body::before {
     display: none;
   }
-  .animate-floaty,
-  .animate-ring-rotate,
-  .animate-pulse-ring,
-  .animate-shine,
-  .animate-pop,
-  .card-shine::after {
-    animation: none !important;
+  .card-shine:hover::after {
+    animation: none;
+  }
+  .match-pill-shimmer {
+    animation: none;
   }
   .hover-lift:hover {
     transform: none;

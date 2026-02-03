@@ -5,8 +5,8 @@ import { classNames } from "@/lib/utils";
 type BadgeVariant = "ready" | "not-trained";
 
 const variantStyles: Record<BadgeVariant, string> = {
-  ready: "bg-emerald-100 text-emerald-800",
-  "not-trained": "bg-amber-100 text-amber-800",
+  ready: "bg-emerald-50 text-emerald-700 border border-emerald-200/60",
+  "not-trained": "bg-amber-50 text-amber-700 border border-amber-200/60",
 };
 
 type BadgeProps = {
@@ -20,7 +20,7 @@ export function Badge({ variant, className, children }: BadgeProps) {
   return (
     <span
       className={classNames(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium",
         variantStyles[variant],
         className
       )}

@@ -1,15 +1,14 @@
 /**
- * Deterministic color for interest/label chips. Hash label to one of 8 palettes.
+ * Soft palette only (50/100 shades). Text stays slate-700 for readability.
+ * Primary: Indigo/Violet. Secondary: Teal. Success: Emerald. Neutral: Slate, Sky.
  */
-const PALETTES = [
-  "bg-amber-100 text-amber-800 border border-amber-200",
-  "bg-sky-100 text-sky-800 border border-sky-200",
-  "bg-violet-100 text-violet-800 border border-violet-200",
-  "bg-rose-100 text-rose-800 border border-rose-200",
-  "bg-emerald-100 text-emerald-800 border border-emerald-200",
-  "bg-orange-100 text-orange-800 border border-orange-200",
-  "bg-fuchsia-100 text-fuchsia-800 border border-fuchsia-200",
-  "bg-indigo-100 text-indigo-800 border border-indigo-200",
+const SOFT_PALETTES = [
+  "bg-indigo-50 border-indigo-100 text-slate-700",
+  "bg-violet-50 border-violet-100 text-slate-700",
+  "bg-teal-50 border-teal-100 text-slate-700",
+  "bg-sky-50 border-sky-100 text-slate-700",
+  "bg-slate-100 border-slate-200 text-slate-700",
+  "bg-emerald-50 border-emerald-100 text-slate-700",
 ] as const;
 
 function hash(str: string): number {
@@ -21,7 +20,8 @@ function hash(str: string): number {
   return Math.abs(h);
 }
 
-export function getChipColor(label: string): string {
-  const idx = hash(label.toLowerCase()) % PALETTES.length;
-  return PALETTES[idx];
+/** Returns Tailwind classes for a chip (soft background + border + text). Used when chip is not selected. */
+export function getChipClasses(label: string): string {
+  const idx = hash(label.toLowerCase()) % SOFT_PALETTES.length;
+  return SOFT_PALETTES[idx];
 }
